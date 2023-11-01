@@ -10,6 +10,7 @@ import {
   TextInputProps,
   ColorValue,
 } from "react-native";
+import { v4 } from "uuid";
 import memoize from "fast-memoize";
 
 const RNSelectableText = requireNativeComponent("RNSelectableText");
@@ -174,9 +175,9 @@ export const SelectableText = ({
     textValue =
       props.highlights && props.highlights.length > 0
         ? mapHighlightsRanges(value, props.highlights).map(
-            ({ id, isHighlight, text, color }, key) => (
+            ({ id, isHighlight, text, color }) => (
               <Text
-                key={key}
+                key={v4()}
                 {...textComponentProps}
                 selectable={true}
                 style={
@@ -211,7 +212,10 @@ export const SelectableText = ({
       selectable={true}
       onSelection={onSelectionNative}
     >
-      <TX {...{ [textValueProp]: textValue, ...textComponentProps }} />
+      <TX
+        key={v4()}
+        {...{ [textValueProp]: textValue, ...textComponentProps }}
+      />
     </RNSelectableText>
   );
 };
